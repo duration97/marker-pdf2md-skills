@@ -1,6 +1,6 @@
-# marker-pdf2md
+# marker-pdf2md-skills：Codex PDF 转 Markdown 技能
 
-面向学术写作与文献整理的本地 PDF → Markdown 技能。以 Marker 为转换引擎，重点处理扫描书、中文史料和学术论文，保留公式、表格、图片以及原 PDF 页面定位，并为印刷页码核验提供独立记录。
+这是一个面向 **Codex** 的本地 PDF → Markdown 技能，适用于学术写作与文献整理。以 Marker 为转换引擎，重点处理扫描书、中文史料和学术论文，保留公式、表格、图片以及原 PDF 页面定位，并为印刷页码核验提供独立记录。
 
 **质量优先，速度其次。** 本工具生成便于检索、校对和引用的工作文本，不承诺 OCR、公式或表格逐项正确。正式引用须对照原 PDF；PDF 第几页与书上印的页码分别记录。
 
@@ -19,7 +19,7 @@
 需要 Python 3.10 或更高版本。依赖较多，首次安装与模型下载需要网络。已有可用环境可复用；不要为使用本技能自动升级整个 Python 环境。
 
 ```powershell
-git clone https://github.com/duration97/marker-pdf2md.git
+git clone https://github.com/duration97/marker-pdf2md-skills.git marker-pdf2md
 cd marker-pdf2md
 # 先按你的硬件安装合适的 PyTorch，参照其官方安装说明。
 python -m pip install -r requirements.txt
@@ -39,7 +39,7 @@ python scripts/install_runtime.py --check
 
 模型权重由安装的 Surya 按其版本下载到模型缓存，不在本仓库。首次运行需额外空间与下载时间。若网络需代理，按本地网络配置设置当前进程的 `HTTPS_PROXY`；不把密码或令牌写进仓库。
 
-作为 Codex 技能使用时，将此目录放入你配置的技能目录，例如 `~/.codex/skills/marker-pdf2md`。重载技能后可调用 `$marker-pdf2md`；也可以直接运行以下脚本，不必依赖 Codex。
+作为 Codex 技能使用时，将此目录放入你配置的技能目录，例如 `~/.codex/skills/marker-pdf2md`。重载技能后可调用 `$marker-pdf2md`。GitHub 仓库名为 `marker-pdf2md-skills`，技能目录与调用名称仍为 `marker-pdf2md`；上面的克隆命令已指定相应本地目录。底层脚本也可以直接在终端运行。
 
 ## 转换
 

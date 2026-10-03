@@ -2,14 +2,14 @@
 
 GitHub 用户名是个人主页与仓库地址中的名称；登录邮箱用于登录，不用作仓库路径。`Sign in` 就是登录，`Sign up` 是注册。
 
-本项目地址为 `https://github.com/duration97/marker-pdf2md`。仓库公开后，别人可以浏览代码、下载 ZIP、提出 Issue，或者 fork 后提交改进。创建仓库与发布版本是两个步骤：仓库存放持续更新的代码；Release 为一个已测试版本提供固定下载入口。
+本项目地址为 `https://github.com/duration97/marker-pdf2md-skills`，它是一个供 Codex 使用的 PDF 文献转换技能，调用名称为 `$marker-pdf2md`。仓库公开后，别人可以浏览代码、下载 ZIP、提出 Issue，或者 fork 后提交改进。创建仓库与发布版本是两个步骤：仓库存放持续更新的代码；Release 为一个已测试版本提供固定下载入口。
 
 ## 第一次发布的步骤
 
 1. 整理代码、README、依赖说明、许可和测试。检查不含文献全文、运行库、模型、密码与令牌。
 2. 在本地初始化 Git，把文件加入暂存区，创建提交。提交表示一次可追踪的代码快照。
 3. 用 GitHub CLI 官方设备授权登录。本人在已登录的浏览器打开 `https://github.com/login/device`，输入一次性设备代码并核对 GitHub CLI。密码不交给助手，也不写进命令。
-4. 在本人账号下创建公开仓库，将本地提交推送。CLI 例子：`gh repo create marker-pdf2md --public --source . --remote origin --push`。已有本地 README/许可时不要在远端再次创建初始文件。
+4. 在本人账号下创建公开仓库，将本地提交推送。CLI 例子：`gh repo create marker-pdf2md-skills --public --source . --remote origin --push`。已有本地 README/许可时不要在远端再次创建初始文件。
 5. 检查网页上的 README、LICENSE 和代码，检查自动测试。
 6. 创建版本标签（如 `v0.1.0`）并发布 Release，说明功能、验证范围与已知限制，提供只含源码的 ZIP 和校验和。
 
