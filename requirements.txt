@@ -1,0 +1,4 @@
+# Tested integration. Install a suitable PyTorch build for your hardware first.
+marker-pdf==2.0.0
+surya-ocr==0.22.1
+psutil>=5.9,<8

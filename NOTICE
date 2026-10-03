@@ -1,0 +1,7 @@
+marker-pdf2md
+Copyright 2026 duration97
+
+This project provides original skill instructions and helper scripts around
+separately installed Marker, Surya, and optional llama.cpp software.
+Third-party components and model weights retain their own licenses.
+See THIRD_PARTY_NOTICES.md.
