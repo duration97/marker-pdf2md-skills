@@ -12,6 +12,7 @@ from math_signals import math_risks
 from install_runtime import validate_members
 from page_provenance import PageBoundaryError, selected_indices, text_risks
 from table_signals import table_shape_risks
+from reading_order_signals import reading_order_risks
 
 
 def make_pdf(path, page_specs):
@@ -108,6 +109,30 @@ class QualityTests(unittest.TestCase):
         with zipfile.ZipFile(stream) as archive:
             with self.assertRaises(ValueError):
                 validate_members(archive)
+
+    def test_title_displaced_after_columns_is_detected(self):
+        page = {'bbox': [0, 0, 600, 800], 'blocks': [
+            {'type': 'Title', 'bbox': [60, 40, 540, 80], 'text': 'An authored article title'},
+            {'type': 'Text', 'bbox': [30, 150, 280, 500], 'text': 'The complete left column content'},
+            {'type': 'Text', 'bbox': [320, 150, 570, 500], 'text': 'The complete right column content'}]}
+        flags = reading_order_risks('The complete left column content\nThe complete right column content\nAn authored article title', page)
+        self.assertTrue(any('上下版面' in f for f in flags))
+        self.assertEqual(reading_order_risks('An authored article title\nThe complete left column content\nThe complete right column content', page), [])
+
+    def test_separate_lower_two_column_region_is_not_moved_above_upper(self):
+        page = {'bbox': [0, 0, 600, 800], 'blocks': [
+            {'type': 'Text', 'bbox': [20, 40, 280, 300], 'text': 'Upper region left text'},
+            {'type': 'Text', 'bbox': [320, 40, 580, 300], 'text': 'Upper region right text'},
+            {'type': 'Text', 'bbox': [20, 400, 280, 700], 'text': 'Lower region left text'},
+            {'type': 'Text', 'bbox': [320, 400, 580, 700], 'text': 'Lower region right text'}]}
+        good = 'Upper region left text\nUpper region right text\nLower region left text\nLower region right text'
+        self.assertEqual(reading_order_risks(good, page), [])
+        bad = 'Lower region left text\nLower region right text\nUpper region left text\nUpper region right text'
+        self.assertTrue(any('上下版面' in f for f in reading_order_risks(bad, page)))
+
+    def test_plain_or_high_circled_missing_footnote_is_flagged(self):
+        self.assertTrue(any('缺注释' in f for f in text_risks('Some prose with a note㉑')))
+        self.assertFalse(any('缺注释' in f for f in text_risks('Some prose with a note㉑\n\n㉑Note text')))
 
 
 if __name__ == '__main__':

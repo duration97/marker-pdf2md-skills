@@ -40,9 +40,9 @@ def text_risks(body):
         bm = repetition_metrics(block)
         if bm['visible_bytes'] >= 1000 and bm['compression_ratio'] >= 8:
             flags.append('局部块异常重复'); break
-    refs = Counter(re.findall(r'<sup>\s*([①-⑳])\s*</sup>', body))
-    definitions = {marker for group in re.findall(r'(?:^|\n)\s*((?:[①-⑳]\s*)+)\S', visible)
-                   for marker in re.findall(r'[①-⑳]', group)}
+    refs = Counter(re.findall(r'[①-⑳㉑-㉟㊱-㊿]', visible))
+    definitions = {marker for group in re.findall(r'(?:^|\n)\s*((?:[①-⑳㉑-㉟㊱-㊿]\s*)+)\S', visible)
+                   for marker in re.findall(r'[①-⑳㉑-㉟㊱-㊿]', group)}
     if any(marker not in definitions for marker in refs):
         flags.append('脚注标记可能缺注释（须原图确认，跨页注可能正常）')
     if len(compact) > 6000:

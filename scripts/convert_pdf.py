@@ -402,6 +402,14 @@ def main():
             if flags:
                 math_findings.append({'pdf_page': row['pdf_page'], 'risks': flags})
         warnings += [f"PDF 第 {item['pdf_page']} 页：{risk}" for item in math_findings for risk in item['risks']]
+        from reading_order_signals import reading_order_risks
+        reading_findings = []
+        for row, body in zip(page_records, chunks):
+            page = layout_by_page.get(row['pdf_page'])
+            flags = reading_order_risks(body, page) if page else []
+            if flags:
+                reading_findings.append({'pdf_page': row['pdf_page'], 'risks': flags})
+        warnings += [f"PDF 第 {item['pdf_page']} 页：{risk}" for item in reading_findings for risk in item['risks']]
         if args.mode == 'fast' and any(p['route'] == 'balanced_required' for p in profile['pages']):
             warnings.append('fast 模式包含复杂或扫描页；该结果须与 balanced 和原页对照，不能直接当作质量验证通过')
         if args.scan_book:
@@ -437,6 +445,7 @@ def main():
                   'table_shape_inconsistencies': table_findings,
                   'math_review_signals': math_findings,
                   'math_accuracy_status': 'unreviewed',
+                  'reading_order_signals': reading_findings,
                   'source_sha256': manifest['source_sha256'],
                   'conversion_seconds': round(elapsed, 3),
                   'seconds_per_page': round(elapsed / profile['requested_pages'], 3),
