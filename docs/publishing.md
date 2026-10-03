@@ -2,7 +2,7 @@
 
 GitHub 用户名是个人主页与仓库地址中的名称；登录邮箱用于登录，不用作仓库路径。`Sign in` 就是登录，`Sign up` 是注册。
 
-本项目地址为 `https://github.com/duration97/marker-pdf2md-skills`，它是一个供 Codex 使用的 PDF 文献转换技能，调用名称为 `$marker-pdf2md`。仓库公开后，别人可以浏览代码、下载 ZIP、提出 Issue，或者 fork 后提交改进。创建仓库与发布版本是两个步骤：仓库存放持续更新的代码；Release 为一个已测试版本提供固定下载入口。
+本项目地址为 `https://github.com/duration97/marker-pdf2md-skills`，它是一个供 Codex 使用的 PDF 文献转换技能，调用名称为 `$marker-pdf2md-skills`。仓库公开后，别人可以浏览代码、下载 ZIP、提出 Issue，或者 fork 后提交改进。创建仓库与发布版本是两个步骤：仓库存放持续更新的代码；Release 为一个已测试版本提供固定下载入口。此次调用名称调整只提交并推送仓库，不创建新版本，也不修改已有 Release 的下载包；需要新调用名称时使用仓库当前源码。
 
 ## 第一次发布的步骤
 

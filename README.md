@@ -19,8 +19,8 @@
 需要 Python 3.10 或更高版本。依赖较多，首次安装与模型下载需要网络。已有可用环境可复用；不要为使用本技能自动升级整个 Python 环境。
 
 ```powershell
-git clone https://github.com/duration97/marker-pdf2md-skills.git marker-pdf2md
-cd marker-pdf2md
+git clone https://github.com/duration97/marker-pdf2md-skills.git
+cd marker-pdf2md-skills
 # 先按你的硬件安装合适的 PyTorch，参照其官方安装说明。
 python -m pip install -r requirements.txt
 python scripts/convert_pdf.py --check
@@ -39,7 +39,7 @@ python scripts/install_runtime.py --check
 
 模型权重由安装的 Surya 按其版本下载到模型缓存，不在本仓库。首次运行需额外空间与下载时间。若网络需代理，按本地网络配置设置当前进程的 `HTTPS_PROXY`；不把密码或令牌写进仓库。
 
-作为 Codex 技能使用时，将此目录放入你配置的技能目录，例如 `~/.codex/skills/marker-pdf2md`。重载技能后可调用 `$marker-pdf2md`。GitHub 仓库名为 `marker-pdf2md-skills`，技能目录与调用名称仍为 `marker-pdf2md`；上面的克隆命令已指定相应本地目录。底层脚本也可以直接在终端运行。
+作为 Codex 技能使用时，将此目录放入你配置的技能目录，例如 `~/.codex/skills/marker-pdf2md-skills`。重载技能后可调用 `$marker-pdf2md-skills`。GitHub 仓库名、技能目录与调用名称统一为 `marker-pdf2md-skills`。已有安装可将旧目录 `marker-pdf2md` 改名为 `marker-pdf2md-skills`，并从仓库同步 `SKILL.md` 和 `agents/openai.yaml` 等源码文件；保留现有 `runtime/`。旧调用名称不再保留为别名。此次名称调整只更新仓库，不创建新 Release；`v0.1.1` 的固定下载包仍使用旧调用名称，需要新名称时请下载仓库当前源码。底层脚本也可以直接在终端运行。
 
 ## 转换
 

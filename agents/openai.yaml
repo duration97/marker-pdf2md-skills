@@ -1,4 +1,4 @@
 interface:
   display_name: "Marker PDF 转 Markdown"
   short_description: "转换科研 PDF 和经济史扫描书，保留逐页来源、原书页码核验与引用线索"
-  default_prompt: "用 $marker-pdf2md 转换这些文献，保留每页来源定位并核验原书页码和引用内容。"
+  default_prompt: "用 $marker-pdf2md-skills 转换这些文献，保留每页来源定位并核验原书页码和引用内容。"
