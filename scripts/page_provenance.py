@@ -109,12 +109,14 @@ def load_printed_map(path, total_pages):
             if value not in {'true', 'false', '1', '0', 'yes', 'no', ''}:
                 raise PageBoundaryError('verified 必须明确为 true/false')
             label, note = row['printed_page'].strip(), row['note'].strip()
+            section = (row.get('所属部分') or '').strip()
             verified = value in {'true', '1', 'yes'}
             if verified and (not label or not note):
                 raise PageBoundaryError('经核验的印刷页码需要页码文本与核验说明 note；无印刷页可写“无印刷页码”')
-            if any(c in label + note for c in '\r\n'):
-                raise PageBoundaryError('页码与核验说明不能跨行')
-            result[number] = {'printed_page': label, 'verified': verified, 'note': note}
+            if any(c in label + note + section for c in '\r\n'):
+                raise PageBoundaryError('页码、核验说明与所属部分不能跨行')
+            result[number] = {'printed_page': label, 'verified': verified, 'note': note,
+                              '所属部分': section}
     return result
 
 
@@ -151,15 +153,19 @@ def annotate_pages(text, expected_indices, mapping, manifest, output, metadata_i
         body = text[match.end():markers[i + 1].start() if i + 1 < len(markers) else len(text)].strip()
         printed = mapping.get(number, {'printed_page': '', 'verified': False, 'note': ''})
         label = printed['printed_page']
+        section = printed.get('所属部分', '')
         displayed = (label + '（已核验）') if printed['verified'] else ((label + '（候选，待核）') if label else '待核')
         anchor = f'pdf-page-{number:06d}'
         if reading:
             page_label = f'第 {label} 页' if printed['verified'] and label != '无印刷页码' else f'PDF 第 {number} 页，' + ('无印刷页码' if printed['verified'] else '印刷页码待核')
+            if section:
+                page_label = section + '，' + page_label
             lines += [f'<a id="{anchor}"></a>\n\n', f'〔{html.escape(page_label)}〕\n\n', body + '\n\n']
         else:
             lines += [f'<a id="{anchor}"></a>\n\n',
                       f'## 来源定位：PDF 第 {number} 页｜原书印刷页码：{html.escape(displayed)}\n\n', body + '\n\n']
         record = {'pdf_page': number, 'marker_page_index': index, 'printed_page': label,
+                  '所属部分': section,
                   'verified': printed['verified'], 'note': printed['note'], 'anchor': anchor,
                   'text_status': 'unreviewed', 'non_whitespace_chars': len(re.sub(r'\s', '', body))}
         records.append(record)
@@ -168,7 +174,7 @@ def annotate_pages(text, expected_indices, mapping, manifest, output, metadata_i
         risks = text_risks(body)
         if risks:
             warnings.append(f'PDF 第 {number} 页：'+ '、'.join(risks) + '；可能发生 OCR 重复生成或幻觉，须查看原图，不能据此引用')
-    fieldnames = ['pdf_page', 'marker_page_index', 'printed_page', 'verified', 'note', 'anchor', 'text_status', 'non_whitespace_chars']
+    fieldnames = ['pdf_page', 'marker_page_index', 'printed_page', '所属部分', 'verified', 'note', 'anchor', 'text_status', 'non_whitespace_chars']
     with (output / 'page_map.csv').open('w', encoding='utf-8-sig', newline='') as handle:
         writer = csv.DictWriter(handle, fieldnames=fieldnames)
         writer.writeheader()
